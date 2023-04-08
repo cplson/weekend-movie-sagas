@@ -25,7 +25,11 @@ function* fetchThisMovie(action){
     console.log(action.payload);
     try{
         const thisMovie = yield axios.get((`/api/movie/${action.payload}`));
-        console.log('Movie recieved from db:', thisMovie.data);
+        const thisMovieGenres = yield axios.get((`api/genre/${action.payload}`));
+        console.log('Movie recieved from db:', thisMovie.data, thisMovieGenres.data);
+        put({
+            
+        })
     }catch(error){
         console.log('there was an error getting the selected movie from the db');
     }
@@ -58,6 +62,16 @@ const movies = (state = [], action) => {
 
 // Used to store the movie genres
 const genres = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_GENRES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+// Used to store the movie genres
+const selectedMovie = (state = {}, action) => {
     switch (action.type) {
         case 'SET_GENRES':
             return action.payload;
