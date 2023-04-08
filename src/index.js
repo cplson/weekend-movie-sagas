@@ -22,13 +22,13 @@ function* rootSaga() {
 // Saga to get the selected movie
 function* fetchThisMovie(action){
     // get this movie
-    //console.log(action.payload);
-    // try{
-    //     const thisMovie = yield axios.get((`/api/movie/${action.payload}`));
-    //     console.log('Movie recieved from db:', thisMovie);
-    // }catch(error){
-    //     console.log('there was an error getting the selected movie from the db');
-    // }
+    console.log(action.payload);
+    try{
+        const thisMovie = yield axios.get((`/api/movie/${action.payload}`));
+        console.log('Movie recieved from db:', thisMovie.data);
+    }catch(error){
+        console.log('there was an error getting the selected movie from the db');
+    }
 }
 function* fetchAllMovies() {
     // get all movies from the DB

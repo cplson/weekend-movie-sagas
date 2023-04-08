@@ -2,11 +2,21 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
-// // GET the selected movie
-// router.get('/:id', (req, res) => {
+// GET the selected movie
+router.get('/:id', (req, res) => {
+console.log('inside thisMovie router', req.params.id);
+  const queryText = `SELECT *
+  FROM movies
+  WHERE id = $1;`
 
-//   const query = 
-// })
+  pool.query(queryText, [req.params.id]).then(result => {
+    console.log(result.rows);
+    res.send(result.rows);
+  }).catch(error => {
+    console.log(error);
+    res.sendStatus(500);
+  })
+})
 
 router.get('/', (req, res) => {
 

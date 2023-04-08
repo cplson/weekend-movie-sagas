@@ -79,3 +79,8 @@ VALUES
 (12,6), (12,3),           -- Social Net
 (13,6), (13,10), (13,1),  -- Titanic
 (14,1), (14,2), (14,4);   -- Toy Story
+
+-- GET movie
+SELECT *
+FROM movies
+WHERE id = 3;
