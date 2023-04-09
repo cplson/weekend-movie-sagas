@@ -26,9 +26,14 @@ function* fetchThisMovie(action){
     try{
         const thisMovie = yield axios.get((`/api/movie/${action.payload}`));
         const thisMovieGenres = yield axios.get((`api/genre/${action.payload}`));
-        console.log('Movie recieved from db:', thisMovie.data, thisMovieGenres.data);
-        put({
-            
+        console.log('Movie recieved from db:', thisMovie.data[0], thisMovieGenres.data);
+        yield put({
+            type: 'SET_THIS_MOVIE',
+            payload: thisMovie.data[0]
+        })
+        yield put({
+            type: 'SET_GENRES',
+            payload: thisMovieGenres.data
         })
     }catch(error){
         console.log('there was an error getting the selected movie from the db');
@@ -64,6 +69,7 @@ const movies = (state = [], action) => {
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
+            console.log('inside SET_GENRES');
             return action.payload;
         default:
             return state;
@@ -73,8 +79,11 @@ const genres = (state = [], action) => {
 // Used to store the movie genres
 const selectedMovie = (state = {}, action) => {
     switch (action.type) {
-        case 'SET_GENRES':
-            return action.payload;
+        case 'SET_THIS_MOVIE':
+            console.log('inside SET_THIS_MOVIE', action.type);
+            return {title: action.payload.title,
+                    poster: action.payload.poster,
+                    description: action.payload.description};
         default:
             return state;
     }
@@ -85,6 +94,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        selectedMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
