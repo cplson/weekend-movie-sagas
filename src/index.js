@@ -27,10 +27,12 @@ function* fetchThisMovie(action){
         const thisMovie = yield axios.get((`/api/movie/${action.payload}`));
         const thisMovieGenres = yield axios.get((`api/genre/${action.payload}`));
         console.log('Movie recieved from db:', thisMovie.data[0], thisMovieGenres.data);
+        // dispatch selected movie info
         yield put({
             type: 'SET_THIS_MOVIE',
             payload: thisMovie.data[0]
         })
+        //dispatch selected movie genres
         yield put({
             type: 'SET_GENRES',
             payload: thisMovieGenres.data
@@ -41,9 +43,9 @@ function* fetchThisMovie(action){
 }
 function* fetchAllMovies() {
     // get all movies from the DB
+    // dispatch array to the movies reducer
     try {
         const movies = yield axios.get('/api/movie');
-        console.log('get all:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
 
     } catch {

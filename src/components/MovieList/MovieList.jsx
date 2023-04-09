@@ -4,15 +4,19 @@ import Details from '../Details/Details';
 import { useHistory } from 'react-router-dom';
 import './MovieList.css'
 
+
+// Component to display all movies
 function MovieList() {
     const history = useHistory();
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
 
+    // on page load, send dispatch in order to get movies array from the db
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
+    // Display all movies
     return (
         <main>
             <h1>MovieList</h1>
