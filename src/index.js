@@ -69,6 +69,7 @@ const movies = (state = [], action) => {
 
 // Used to store the movie genres
 const genres = (state = [], action) => {
+    console.log(action.payload);
     switch (action.type) {
         case 'SET_GENRES':
             console.log('inside SET_GENRES');
